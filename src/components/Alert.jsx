@@ -1,12 +1,24 @@
-const Alert = ({alert}) => {
+import React, {useContext} from 'react'
+import {AlertContext} from "../context/alert/alertContext";
+
+export const Alert = () => {
+    const {alert, hide} = useContext(AlertContext)
+    if (!alert.visible) {
+        return null
+    }
+    console.log(alert);
     return (
-            <div className="alert alert-warning alert-dismissible fade show"
-                 role="alert">
-                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-                <button type="button"
-                        className="btn-close"
-                        data-bs-dismiss="alert"
-                        aria-label="Close"/>
+            <div className={`alert alert-${alert.type || 'warning'} alert-dismissible`}>
+                <strong>Внимание!</strong>
+                {alert.text}
+                <button onClick={hide}
+                        type="button"
+                        className="close"
+                        data-dismiss="alert"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
             </div>
     )
 }
